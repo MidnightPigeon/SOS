@@ -12,3 +12,6 @@ Scenery Of Scripts: Dynamic Scene Construction Based on Textual Processing of Fi
 
 
 基于当前的研究现状与同类产品对比，本项目的研究领域为影视戏剧艺术、动画建模与AI技术交叉领域的空白区，且存在实用价值与商业需求，该项目将明确优化影视戏剧艺术制作过程中的排练与场景预演环节，并为个体用户提供一种全新的视频生成方式与视觉体验。
+
+
+本项目
