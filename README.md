@@ -1,7 +1,7 @@
 # Scenery Of Scripts
 Scenery Of Scripts: Dynamic Scene Construction Based on Textual Processing of Film and Drama Texts and AI Modeling
 
-# 文景方园 项目组主仓库
+# 文景方圆 项目组主仓库
 随着现代社会中科技与信息传输方式的高速发展，简单的文本表述已经无法满足人们的精神需求，更多的人开始将兴趣转向视觉艺术方面的展现。从短视频到电影，影视戏剧艺术相关的产业正蒸蒸日上。正因如此，对于影视戏剧类文本（舞台剧剧本，电影分镜脚本，传统戏剧剧本等）的编写与处理需求远超以往。
 
 
