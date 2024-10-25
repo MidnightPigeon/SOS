@@ -1,0 +1,5 @@
+https://github.com/gd3kr/BlenderGPT?tab=readme-ov-file
+-Blender和GPT-4的交叉
+
+https://github.com/eliemichel/MapsModelsImporter
+-从真实世界地图向blender import建筑等（利用add-on扩展脚本）
