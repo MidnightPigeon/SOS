@@ -4,14 +4,20 @@ import re
 
 def read_prologue():
     people_list = []
-    with open('./Code/backend/prologue.txt', 'r', encoding='utf-8') as file:
+    with open('./Code/backend/script/prologue_1.txt', 'r', encoding='utf-8') as file:
         for line in file:
+            line = line.lstrip()  # 去掉行首的空白字符
             # 使用正则表达式匹配破折号前的名字,特征：1-5个字，在破折号前
             match = re.match(r'^(.{1,5})\s*[—-]{2}', line)
             if match:
                 # 输出匹配到的名字
                 name = match.group(1).replace(' ', '').replace('。', '')
-                jieba.add_word(name) # 添加自定义词语
+                jieba.add_word(name) # 添加自定义词语，这是根据剧本内容确定的一些词语，记录下来用于以后使用
+                if len(name) == 3:
+                    abbrOfName = name[-2:] 
+                    # 因为有可能出现对名字的简称，这里先机械化简单处理，比如三个字的名字，可以用后两个字识别，把它加入自定义库中
+                    jieba.add_word(abbrOfName)
+                
                 gender = gender_match(line)
                 age = age_match(line)
                 age_group = age_group_match(age,line)
@@ -25,8 +31,9 @@ def read_prologue():
                 print(person_info)
             people_list.append(person_info)
 
-    with open('./Code/backend/prologue.txt', 'r', encoding='utf-8') as file:
+    with open('./Code/backend/script/prologue_1.txt', 'r', encoding='utf-8') as file:
         for line in file:
+            line = line.lstrip()  # 去掉行首的空白字符
             words = jieba.cut(line)
             print("/".join(words))
     return people_list
@@ -34,10 +41,11 @@ def read_prologue():
 def gender_match(line):
     matchGender = re.search(r'(男|女)', line)
     InferFemale = re.findall(r'(她|妈|母|奶|姨|姑|姐|妹|女士|尼姑|少女|妇|婆|夫人|闺蜜|女儿|妞)', line)
+    #两个Infer函数都记录了相应的，表征性别词语出现的次数
     InferMale = re.findall(r'(他|爸|父|爷|叔|舅|弟|哥|先生|和尚|公子|儿|少年|太监|公|丈夫)', line)
     if matchGender:
-        return matchGender.group(1)
-    if (InferFemale > InferMale):
+        return matchGender.group(1) #用来获取匹配的内容，也就是 男 或 女 字符。
+    if (InferFemale > InferMale): #如果女性词语出现次数大于男性
         return '女'
     if (InferMale > InferFemale):
         return '男'
@@ -45,10 +53,10 @@ def gender_match(line):
 def age_match(line):
     matchAge = re.search(r'([零一二两三四五六七八九十百]+多岁|[零一二两三四五六七八九十百]+来岁|[零一二两三四五六七八九十百]+几岁|[零一二两三四五六七八九十百]+岁)', line)
     age = 0
-    round = 0
-    ageTemp = 0
+    round = 0 #round可以用来处理权数，用来处理后面跟十、百、千等可能出现的，并能够与先前记录的ageTemp进行组合匹配
+    ageTemp=0
     if not matchAge:
-        return 114514
+        return 114514 #？何意啊
     for char in matchAge.group(1):
         if char == '一':
             ageTemp += 1
@@ -85,7 +93,7 @@ def age_match(line):
                 age += 10
         if char == '百':
             if round > 0:
-                age += ageTemp/round*100 #这样写是为了例如“二三十岁”，“十五岁”这种情况
+                age += ageTemp/round*100 
                 round = ageTemp = 0
             else:
                 age += 100
@@ -112,4 +120,5 @@ def age_group_match(age,line):
     return '非人哉！' # 年龄超过150岁，返回非人哉！
 
 read_prologue()
+
 
