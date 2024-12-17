@@ -8,5 +8,5 @@ https://www.mixamo.com/
 有部分动作预设可以进行骨骼绑定 动作预览（可选，模型精细度与动作设定都足够）
 https://sketchfab.com/
 有免费和付费分类的模型（可选，模型有合适的并且有免费分区）
-https://www.freepoly.org/download
+https://www.freepoly.org/
 个人运营的免费网站（可选，免费模型可用于构建场景）
