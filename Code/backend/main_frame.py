@@ -21,12 +21,31 @@ ReDoc: http://127.0.0.1:8000/redoc
 FastAPI官方站点：https://fastapi.tiangolo.com/
 """
 
+"""
+后端功能框架设定：
+1. 通过前端接收完整剧本并保存至本地，路径为script文件夹下。
+2. 调用分词代码read_act.py，对剧本进行分词处理，并将分词结果保存至result.txt。
+3. 读取result.txt并根据内容自编辑blender脚本，上传至上级目录的Animation文件夹下。
+4. 调用blender程序并注入对应的脚本，生成动画并渲染为视频，保存至Animation文件夹下。
+5. 将生成的动画文件路径返回给前端，通过前端展示给用户。
+"""
+
+
 #导入所需库
 import os
 from fastapi import FastAPI, HTTPException, Query
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
 app = FastAPI()
+
+# 定义一个上传文件的目录
+UPLOAD_DIR = "./script"
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+# 定义一个Pydantic模型用于文本输入
+class TextRequest(BaseModel):
+    content: str
 
 # 定义一个Pydantic模型用于文件路径的输入
 class FilePathRequest(BaseModel):
@@ -50,6 +69,26 @@ def read_file(file_path: str) -> str:
         raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+
+# 创建一个GET路由来展示欢迎信息
+@app.get("/")
+def read_root():
+    return {"message": "欢迎进入API测试程序，请访问128.0.0.1：8000/docs以查看API文档！"}
+
+# 创建一个POST路由来接收文本并保存为txt文件
+@app.post("/upload-text/")
+async def upload_text(text: TextRequest):
+    """
+    输入长文本，将其保存为本地txt文件，用于接收剧本。
+    """
+    # 保存完整剧本，文件名为script_full.txt
+    file_name = os.path.join(UPLOAD_DIR, "script_full.txt")
+
+    # 将文本内容保存为文件
+    with open(file_name, "w", encoding="utf-8") as f:
+        f.write(text.content)
+
+    return JSONResponse(content={"message": "Text saved successfully", "file": file_name}, status_code=200)
 
 # 创建一个GET路由来展示文件内容
 @app.get("/read-file/")
