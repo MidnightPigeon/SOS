@@ -4,8 +4,10 @@
 #1. 该框架需求Uvicorn启动，请先通过cmd安装fastapi与Uvicorn
 #具体指令：pip install uvicorn, pip install fastapi
 #后续可通过单独的文档进行安装
-#2. 请在cmd中输入指令：uvicorn main_frame:app --reload以启动服务
+#2. 请在项目终端中输入指令：uvicorn main_frame:app --reload以启动服务
+#需要首先重定向至Code/backend文件夹，重定向指令为：cd Code/backend
 #运行后，FastAPI 应用会在 http://127.0.0.1:8000 启动，你可以在浏览器中访问这个 URL 来看到返回的 JSON 响应。
+#终端窗口可以看到具体的访问信息，通过Ctrl+C可以关闭服务。
 
 #FastAPI 会自动为你的 API 生成文档，并且你可以通过两个 URL 查看：
 #Swagger UI: http://127.0.0.1:8000/docs
