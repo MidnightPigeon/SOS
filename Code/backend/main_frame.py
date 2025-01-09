@@ -80,6 +80,7 @@ def read_root():
 async def upload_text(text: TextRequest):
     """
     输入长文本，将其保存为本地txt文件，用于接收剧本。
+    格式为json，在请求体中包含一个json对象，如：{"content": "This is a long text."}
     """
     # 保存完整剧本，文件名为script_full.txt
     file_name = os.path.join(UPLOAD_DIR, "script_full.txt")
