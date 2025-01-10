@@ -23,9 +23,9 @@ FastAPI官方站点：https://fastapi.tiangolo.com/
 
 """
 后端功能框架设定：
-1. 通过前端接收完整剧本并保存至本地，路径为script文件夹下。
+1. 通过前端接收完整剧本并保存至本地，路径为script文件夹下(已完成此项功能)。
 2. 调用分词代码read_act.py，对剧本进行分词处理，并将分词结果保存至result.txt。
-3. 读取result.txt并根据内容自编辑blender脚本，上传至上级目录的Animation文件夹下。
+3. 读取result.txt并根据内容自编辑blender脚本，上传至上级目录的Animation文件夹下(已完成文本读取)。
 4. 调用blender程序并注入对应的脚本，生成动画并渲染为视频，保存至Animation文件夹下。
 5. 将生成的动画文件路径返回给前端，通过前端展示给用户。
 """
@@ -39,7 +39,7 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
-# 定义一个上传文件的目录
+# 定义一个上传文件的目录（默认在script文件夹内）
 UPLOAD_DIR = "./script"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
@@ -73,7 +73,7 @@ def read_file(file_path: str) -> str:
 # 创建一个GET路由来展示欢迎信息
 @app.get("/")
 def read_root():
-    return {"message": "欢迎进入API测试程序，请访问128.0.0.1：8000/docs以查看API文档！"}
+    return {"message": "欢迎进入API测试程序，请访问 https://128.0.0.1:8000/docs 以查看API文档！"}
 
 # 创建一个POST路由来接收文本并保存为txt文件
 @app.post("/upload-text/")
