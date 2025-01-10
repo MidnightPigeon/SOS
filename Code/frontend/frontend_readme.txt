@@ -14,5 +14,6 @@ npm install axios
 
 前端启动指令为npm run dev。
 启动后进入 http://localhost:5173/ 即可访问。
+终端会展示帮助指令，退出前端在终端输入q+enter即可。
 
 当前前端仅包含长文本输入功能，且目前传输有问题，仅供测试。

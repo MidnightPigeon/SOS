@@ -25,21 +25,28 @@ export default {
         // 将长文本转换为 JSON 格式
         const jsonData = this.convertTextToJson(this.longText);
 
+        // 控制台输出 JSON 数据
+        console.log(JSON.stringify(jsonData));
+
         // 使用 axios 将 JSON 数据发送到后端
-        const response = await axios.post('https://127.0.0.1:8000/upload-text', jsonData);
-        
+        const response = await axios.post('https://127.0.0.1:8000/upload-text', jsonData, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
         // 后端返回的响应
         console.log('响应:', response.data);
       } catch (error) {
         console.error('请求失败:', error);
       }
     },
-    
+
     // 将长文本转换为 JSON 格式
     convertTextToJson(text) {
       // 假设我们只是简单地将长文本放入 JSON 对象中的 "content" 字段
       return {
-        content: text
+        "content": text
       };
     }
   }
