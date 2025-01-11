@@ -16,8 +16,6 @@ Swagger UI: http://127.0.0.1:8000/docs
 ReDoc: http://127.0.0.1:8000/redoc
 这两个接口提供了自动生成的交互式 API 文档，可以让你方便地查看 API 文档并进行测试。
 
-目前本程序为测试程序，仅返回Hello, World!
-
 FastAPI官方站点：https://fastapi.tiangolo.com/
 """
 
