@@ -71,7 +71,7 @@ def read_file(file_path: str) -> str:
 # 创建一个GET路由来展示欢迎信息
 @app.get("/")
 def read_root():
-    return {"message": "欢迎进入API测试程序，请访问 https://128.0.0.1:8000/docs 以查看API文档！"}
+    return {"message": "欢迎进入API测试程序，请访问 https://127.0.0.1:8000/docs 以查看API文档！"}
 
 # 创建一个POST路由来接收文本并保存为txt文件
 @app.post("/upload-text/")
