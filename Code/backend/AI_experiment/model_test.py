@@ -27,7 +27,6 @@ inputs = tokenizer(
     max_length=512
 )
 
-# 获取模型输出
 outputs = model(**inputs)
 print(outputs.last_hidden_state.shape)  # 输出形状：[1, 序列长度, 768]
 
