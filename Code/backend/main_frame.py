@@ -77,7 +77,7 @@ def read_root():
 @app.post("/upload-text/")
 async def upload_text(text: TextRequest):
     """
-    输入长文本，将其保存为本地txt文件，用于接收剧本。
+    输入长文本，将其保存为本地txt文件，用于接收剧本。更新了能够直接处理剧本，并生成相关的动作指令。
     格式为json，在请求体中包含一个json对象，如：{"content": "This is a long text."}
     """
     # 保存完整剧本，文件名为script_full.txt
@@ -86,8 +86,52 @@ async def upload_text(text: TextRequest):
     # 将文本内容保存为文件
     with open(file_name, "w", encoding="utf-8") as f:
         f.write(text.content)
+        
+    # 生成相应的生成相应的动作指令
+    actions = process_script(text.content)
 
     return JSONResponse(content={"message": "Text saved successfully", "file": file_name}, status_code=200)
+
+"""
+需要将分词接入进来，将文本完善成方便后续处理的简易指令。这一步需要进行分行。
+"""
+
+
+
+# 处理生成动作指令的函数：
+def process_script(script: str):
+    """
+    处理剧本内容，将其拆解为动作指令。
+    首先完成第一版，简易判断，对于常见的动作行为，通过穷举判断，进行相应的动作归纳。
+    后续版本更新，考虑接入ai，进行更智能的判断。
+    """
+    actions = [] # 处理成有动作，也有对应的具体细节。对应下方details
+    
+    # 假设每一行描述的是一个简单的动作，应当通过之前实现的分词，将结果分成不同的行，便于现在的处理
+    lines = script.split("\n") # 将script文本按照行进行分割，每一行逐个判断
+    
+    for line in lines:
+        line = line.strip()  # 去除空白字符
+        
+        # 处理后，每一行的line，其包含的信息应当是，某人做了某事，这样简单的指令。
+        # 下文中details表征的是具体的指令，比如走路的速度，比如说话的语气
+        
+        if "走" in line or "行" in line or "行走" in line or "走路" in line or "奔走" in line or "离开" in line or "走开" in line or "跑" in line or "前往" in line or "走动" in line or "离去" in line or "走向" in line or "走过" in line:
+        # 如果剧本中有“走”这个动作
+            actions.append({"action": "walk", "details": line})
+        
+        elif "说" in line or "讲" in line or "说话" in line or "谈" in line or "讲述" in line or "述说" in line or "告诉" in line or "叙述" in line or "告知" in line or "表达" in line or "回应" in line or "演讲" in line or "发言" in line or "叫" in line:
+        # 如果剧本中有“说话”这个动作
+            actions.append({"action": "speak", "details": line})
+        
+        elif "看" in line or "看见" in line or "观看" in line or "瞧" in line or "注视" in line or "观察" in line or "凝视" in line or "浏览" in line or "审视" in line or "窥视" in line or "瞪" in line or "盯" in line or "望" in line:
+        # 如果剧本中有“看”这个动作
+            actions.append({"action": "look", "details": line})
+        
+        # 扩展更多的指令处理逻辑
+        
+    return actions
+
 
 # 创建一个GET路由来展示文件内容
 @app.get("/read-file/")
