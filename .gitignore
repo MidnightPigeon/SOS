@@ -2,3 +2,4 @@
 *.pyc
 Code/frontend/sosfrontend/package-lock.json
 Code/backend/script/script_full.txt
+Code/backend/base/pytorch_model.bin
