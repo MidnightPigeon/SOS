@@ -30,12 +30,6 @@ def read_prologue():
                 }
                 print(person_info)
             people_list.append(person_info)
-
-    with open('./Code/backend/script/prologue_1.txt', 'r', encoding='utf-8') as file:
-        for line in file:
-            line = line.lstrip()  # 去掉行首的空白字符
-            words = jieba.cut(line)
-            print("/".join(words))
     return people_list
 
 def gender_match(line):
@@ -56,7 +50,7 @@ def age_match(line):
     round = 0 #round可以用来处理权数，用来处理后面跟十、百、千等可能出现的，并能够与先前记录的ageTemp进行组合匹配
     ageTemp=0
     if not matchAge:
-        return 114514 #？何意啊
+        return 0 # 未知年龄，返回0
     for char in matchAge.group(1):
         if char == '一':
             ageTemp += 1
@@ -105,7 +99,7 @@ def age_match(line):
 
 
 def age_group_match(age,line):
-    if age == 114514:
+    if age == 0:
         return '?' # 未知年龄，返回?
     if age < 5:
         return '婴儿'
